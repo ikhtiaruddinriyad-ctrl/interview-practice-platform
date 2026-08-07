@@ -22,9 +22,9 @@ function App() {
 
   return (
     <div className="container">
-      <h1>🎙 Interview Practice Platform</h1>cd ~/ai-interview-platform
-             git --version
+      <h1>🎙 Interview Practice Platform</h1>
       <p className="tagline">Speak your answer, get instant feedback</p>
+
       {!questions && <SetupForm onQuestionsReady={handleQuestionsReady} />}
 
       {questions && !collectedAnswers && (
