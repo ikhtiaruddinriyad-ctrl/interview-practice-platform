@@ -23,7 +23,7 @@ function App() {
   return (
     <div className="container">
       <h1>🎙 Interview Practice Platform</h1>
-      <p className="tagline">Speak your answer, get instant feedback</p>
+      <p className="tagline">Give your answer, get instant feedback</p>
 
       {!questions && <SetupForm onQuestionsReady={handleQuestionsReady} />}
 
