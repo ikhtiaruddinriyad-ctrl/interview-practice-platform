@@ -44,7 +44,7 @@ function InterviewSession({ questions, onFinish }) {
 
     setSubmitting(true);
     try {
-      const response = await fetch("http://localhost:5050/api/evaluate-answer", {
+      const response = await fetch(`${import.meta.env.VITE_API_URL}/api/evaluate-answer`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
