@@ -65,9 +65,16 @@ const SECTORS = [
   "Statistics",
 ];
 
+const DIFFICULTY_LEVELS = [
+  { value: "beginner", label: "Beginner" },
+  { value: "intermediate", label: "Intermediate" },
+  { value: "advanced", label: "Advanced" },
+];
+
 function SetupForm({ onQuestionsReady }) {
   const [sector, setSector] = useState("");
   const [jobRole, setJobRole] = useState("");
+  const [difficulty, setDifficulty] = useState("intermediate");
   const [loading, setLoading] = useState(false);
 
   const handleSubmit = async (e) => {
@@ -79,7 +86,7 @@ function SetupForm({ onQuestionsReady }) {
       const response = await fetch(`${import.meta.env.VITE_API_URL}/api/generate-questions`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ sector, jobRole }),
+        body: JSON.stringify({ sector, jobRole, difficulty }),
       });
       const data = await response.json();
       onQuestionsReady(data.questions);
@@ -117,16 +124,30 @@ function SetupForm({ onQuestionsReady }) {
         onChange={(e) => setJobRole(e.target.value)}
       />
 
-     <button type="submit" disabled={loading}>
-      {loading ? (
-       <span className="loading-text">
-        <span className="spinner"></span>
-         Generating questions...
-      </span>
-    ) : (
-    "Start Interview"
-     )}
-   </button>
+      <label>Difficulty Level</label>
+      <div className="difficulty-group">
+        {DIFFICULTY_LEVELS.map((level) => (
+          <button
+            key={level.value}
+            type="button"
+            className={`difficulty-button ${difficulty === level.value ? "active" : ""}`}
+            onClick={() => setDifficulty(level.value)}
+          >
+            {level.label}
+          </button>
+        ))}
+      </div>
+
+      <button type="submit" disabled={loading}>
+        {loading ? (
+          <span className="loading-text">
+            <span className="spinner"></span>
+            Generating questions...
+          </span>
+        ) : (
+          "Start Interview"
+        )}
+      </button>
     </form>
   );
 }

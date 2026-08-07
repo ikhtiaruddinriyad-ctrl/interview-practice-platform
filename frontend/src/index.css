@@ -271,3 +271,32 @@ button:disabled {
     padding: 0.65rem 0.85rem;
   }
 }
+.difficulty-group {
+  display: flex;
+  gap: 0.5rem;
+  margin-top: 0.4rem;
+}
+
+.difficulty-button {
+  flex: 1;
+  background: #14141a;
+  border: 1px solid #2c2c38;
+  color: #9a97a8;
+  font-weight: 500;
+  font-size: 0.85rem;
+  padding: 0.6rem;
+  margin-top: 0;
+  border-radius: 8px;
+  transition: border-color 0.15s ease, color 0.15s ease;
+}
+
+.difficulty-button:hover {
+  border-color: #e8b84b;
+  color: #f2f0ea;
+}
+
+.difficulty-button.active {
+  border-color: #e8b84b;
+  background: rgba(232, 184, 75, 0.1);
+  color: #e8b84b;
+}

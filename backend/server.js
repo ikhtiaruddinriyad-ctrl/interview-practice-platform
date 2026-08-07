@@ -27,13 +27,25 @@ app.get("/test-groq", async (req, res) => {
 
 app.post("/api/generate-questions", async (req, res) => {
   try {
-    const { sector, jobRole } = req.body;
+    const { sector, jobRole, difficulty } = req.body;
 
     if (!sector) {
       return res.status(400).json({ error: "sector is required" });
     }
 
+    const difficultyGuide = {
+      beginner: "Keep questions foundational — basic definitions, common concepts a student or fresher would know. Avoid deep technical jargon.",
+      intermediate: "Ask practical, scenario-based questions someone with 1-3 years of experience would face. Mix theory with real application.",
+      advanced: "Ask in-depth, challenging questions covering edge cases, system design, or complex scenarios that test deep expertise.",
+    };
+
+    const level = difficulty || "intermediate";
+    const levelInstruction = difficultyGuide[level] || difficultyGuide.intermediate;
+
     const prompt = `You are an expert interviewer for the "${sector}" field${jobRole ? ` (specific role: ${jobRole})` : ""}.
+
+Difficulty level: ${level.toUpperCase()}
+${levelInstruction}
 
 Generate exactly 8 interview questions relevant to this sector, following this EXACT pattern for question types, repeated twice (8 questions total):
 1. MCQ (multiple choice, 4 options)
@@ -46,6 +58,7 @@ Rules:
 - True/False questions must have a clear factual correct answer (true or false).
 - Open-ended questions do not have a fixed correct answer — they will be evaluated qualitatively later.
 - Base questions on real knowledge/scenarios specific to "${sector}".
+- Match the difficulty level described above for all technical questions.
 
 Return ONLY valid JSON, no extra text, in this exact shape:
 {
